@@ -1,0 +1,10 @@
+{
+  "name": "Gemini Prompt Studio",
+  "description": "An interactive studio to craft, test, and refine prompts for the Gemini API. Experiment with different models, configurations, and system instructions to optimize your results.",
+  "requestFramePermissions": [],
+  "corsProxy": {
+    "http://localhost:11434/": "http://localhost:11434/",
+    "/api/openai": "https://api.openai.com",
+    "/api/anthropic": "https://api.anthropic.com"
+  }
+}

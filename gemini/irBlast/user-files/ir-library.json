@@ -1,0 +1,87 @@
+{
+  "remotes": [
+    {
+      "remoteUniqueKeyTextValue": "tcl::roku tv::1762139429019",
+      "manufacturerTextValue": "tcl",
+      "modelTextValue": "roku tv",
+      "preferredKeySetKeyTextValue": "standardTvKeySet.v1",
+      "keyDefinitions": []
+    },
+    {
+      "remoteUniqueKeyTextValue": "TCL::Roku TV::1762139592880",
+      "manufacturerTextValue": "TCL",
+      "modelTextValue": "Roku TV",
+      "preferredKeySetKeyTextValue": "standardTvKeySet.v1",
+      "keyDefinitions": []
+    }
+  ],
+  "keySets": [
+    {
+      "keySetUniqueKeyTextValue": "standardTvKeySet.v1",
+      "keyPlacements": [
+        {
+          "logicalKeyRoleCode": "powerToggle",
+          "positionRowIndex": 0,
+          "positionColumnIndex": 0
+        },
+        {
+          "logicalKeyRoleCode": "inputSelect",
+          "positionRowIndex": 0,
+          "positionColumnIndex": 1
+        },
+        {
+          "logicalKeyRoleCode": "muteToggle",
+          "positionRowIndex": 0,
+          "positionColumnIndex": 2
+        },
+        {
+          "logicalKeyRoleCode": "volumeIncrease",
+          "positionRowIndex": 1,
+          "positionColumnIndex": 0
+        },
+        {
+          "logicalKeyRoleCode": "navigateUp",
+          "positionRowIndex": 1,
+          "positionColumnIndex": 1
+        },
+        {
+          "logicalKeyRoleCode": "channelIncrease",
+          "positionRowIndex": 1,
+          "positionColumnIndex": 2
+        },
+        {
+          "logicalKeyRoleCode": "volumeDecrease",
+          "positionRowIndex": 2,
+          "positionColumnIndex": 0
+        },
+        {
+          "logicalKeyRoleCode": "navigateOk",
+          "positionRowIndex": 2,
+          "positionColumnIndex": 1
+        },
+        {
+          "logicalKeyRoleCode": "channelDecrease",
+          "positionRowIndex": 2,
+          "positionColumnIndex": 2
+        },
+        {
+          "logicalKeyRoleCode": "navigateLeft",
+          "positionRowIndex": 3,
+          "positionColumnIndex": 0
+        },
+        {
+          "logicalKeyRoleCode": "navigateDown",
+          "positionRowIndex": 3,
+          "positionColumnIndex": 1
+        },
+        {
+          "logicalKeyRoleCode": "navigateRight",
+          "positionRowIndex": 3,
+          "positionColumnIndex": 2
+        }
+      ]
+    }
+  ],
+  "activeRemoteUniqueKeyTextValue": "tcl::roku tv::1762139429019",
+  "activeKeySetUniqueKeyTextValue": "standardTvKeySet.v1"
+}

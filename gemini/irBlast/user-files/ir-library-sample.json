@@ -1,0 +1,75 @@
+{
+  "remotes": [
+    {
+      "remoteUniqueKeyTextValue": "tcl::roku-tv::default",
+      "manufacturerTextValue": "TCL",
+      "modelTextValue": "Roku TV",
+      "preferredKeySetKeyTextValue": "fullTvKeySet.v1",
+      "keyDefinitions": [
+        {
+          "logicalKeyRoleCode": "powerToggle",
+          "displayLabelTextValue": "Power Toggle",
+          "irSignalEncodingFormatCode": "prontoHex",
+          "irSignalEncodedDataTextValue": "0000 006D 0022 0002 0157 00AB 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0015 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0040 0015 0040 0015 0040 0015 0040 0015 0040 0015 05F7"
+        },
+        {
+          "logicalKeyRoleCode": "inputSelect",
+          "displayLabelTextValue": "Input Select",
+          "irSignalEncodingFormatCode": "prontoHex",
+          "irSignalEncodedDataTextValue": "0000 006D 0022 0002 0157 00AB 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0040 0015 0040 0015 0040 0015 0040 0015 05F7"
+        }
+      ]
+    }
+  ],
+  "keySets": [
+    {
+      "keySetUniqueKeyTextValue": "standardTvKeySet.v1",
+      "keyPlacements": [
+        { "logicalKeyRoleCode": "powerToggle", "positionRowIndex": 0, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "inputSelect", "positionRowIndex": 0, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "muteToggle", "positionRowIndex": 0, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "volumeIncrease", "positionRowIndex": 1, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "navigateUp", "positionRowIndex": 1, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "channelIncrease", "positionRowIndex": 1, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "volumeDecrease", "positionRowIndex": 2, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "navigateOk", "positionRowIndex": 2, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "channelDecrease", "positionRowIndex": 2, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "navigateLeft", "positionRowIndex": 3, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "navigateDown", "positionRowIndex": 3, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "navigateRight", "positionRowIndex": 3, "positionColumnIndex": 2 }
+      ]
+    },
+    {
+      "keySetUniqueKeyTextValue": "fullTvKeySet.v1",
+      "keyPlacements": [
+        { "logicalKeyRoleCode": "powerToggle", "positionRowIndex": 0, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "inputSelect", "positionRowIndex": 0, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "menu", "positionRowIndex": 0, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "muteToggle", "positionRowIndex": 0, "positionColumnIndex": 3 },
+        { "logicalKeyRoleCode": "volumeIncrease", "positionRowIndex": 1, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "channelIncrease", "positionRowIndex": 1, "positionColumnIndex": 3 },
+        { "logicalKeyRoleCode": "navigateUp", "positionRowIndex": 2, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "navigateUp", "positionRowIndex": 2, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "volumeDecrease", "positionRowIndex": 3, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "navigateLeft", "positionRowIndex": 3, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "navigateOk", "positionRowIndex": 3, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "navigateRight", "positionRowIndex": 3, "positionColumnIndex": 3 },
+        { "logicalKeyRoleCode": "channelDecrease", "positionRowIndex": 3, "positionColumnIndex": 4 },
+        { "logicalKeyRoleCode": "back", "positionRowIndex": 4, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "navigateDown", "positionRowIndex": 4, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "digit1", "positionRowIndex": 5, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "digit2", "positionRowIndex": 5, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "digit3", "positionRowIndex": 5, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "digit4", "positionRowIndex": 6, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "digit5", "positionRowIndex": 6, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "digit6", "positionRowIndex": 6, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "digit7", "positionRowIndex": 7, "positionColumnIndex": 0 },
+        { "logicalKeyRoleCode": "digit8", "positionRowIndex": 7, "positionColumnIndex": 1 },
+        { "logicalKeyRoleCode": "digit9", "positionRowIndex": 7, "positionColumnIndex": 2 },
+        { "logicalKeyRoleCode": "digit0", "positionRowIndex": 8, "positionColumnIndex": 1 }
+      ]
+    }
+  ],
+  "activeRemoteUniqueKeyTextValue": "tcl::roku-tv::default",
+  "activeKeySetUniqueKeyTextValue": "fullTvKeySet.v1"
+}

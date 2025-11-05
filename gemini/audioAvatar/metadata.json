@@ -1,0 +1,8 @@
+{
+  "name": "Audio Avatars",
+  "description": "Unleash Gemini's creative TTS voices and see their characters come to life with Imagen.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "prompt": ""
+}

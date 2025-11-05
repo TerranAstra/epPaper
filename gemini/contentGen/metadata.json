@@ -1,0 +1,5 @@
+{
+  "name": "Creative Content Generator",
+  "description": "A web application to generate stories and images using Gemini API. This app helps test both text and image generation capabilities.",
+  "requestFramePermissions": []
+}

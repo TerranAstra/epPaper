@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IR Blaster Hardware Detection</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #0b0d10;
+      color: #e6edf7;
+    }
+    button {
+      background: #5ab0ff;
+      color: #081019;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+      font-weight: 600;
+    }
+    button:hover { background: #4a9fee; }
+    .section {
+      background: #12161b;
+      border: 1px solid #222832;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    h2 { color: #5ab0ff; }
+    .code {
+      background: #0f141a;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .success { color: #4ade80; }
+    .error { color: #ff6b6b; }
+    .info { color: #8a94a7; }
+    select, input {
+      background: #0f141a;
+      color: #e6edf7;
+      border: 1px solid #222832;
+      padding: 8px;
+      border-radius: 4px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 IR Blaster Hardware Detection & Testing</h1>
+  
+  <div class="section">
+    <h2>Step 1: Identify Your Hardware</h2>
+    <p class="info">Click the appropriate button based on how your IR blaster connects:</p>
+    
+    <button onclick="checkSerialPort()">🔌 USB/Serial Device (Arduino, USB-UIRT, etc.)</button>
+    <button onclick="checkNetworkDevice()">🌐 Network Device (Broadlink, Tasmota, etc.)</button>
+    <button onclick="checkCommandLine()">💻 Command Line (LIRC, ir-ctl, etc.)</button>
+    
+    <div id="detection-result" class="code" style="margin-top: 20px; display: none;"></div>
+  </div>
+
+  <div class="section" id="serial-section" style="display: none;">
+    <h2>Serial/USB Configuration</h2>
+    <button onclick="requestSerialPort()">Request Serial Port Access</button>
+    <button onclick="listSerialPorts()">List Available Ports</button>
+    
+    <div id="serial-config" style="margin-top: 10px; display: none;">
+      <label>Baud Rate: 
+        <select id="baudRate">
+          <option value="9600">9600</option>
+          <option value="19200">19200</option>
+          <option value="38400">38400</option>
+          <option value="57600">57600</option>
+          <option value="115200">115200</option>
+        </select>
+      </label>
+      <button onclick="connectSerial()">Connect</button>
+      <button onclick="testSerialTransmit()">Test Transmit Power</button>
+    </div>
+    
+    <div id="serial-result" class="code" style="margin-top: 10px;"></div>
+  </div>
+
+  <div class="section" id="network-section" style="display: none;">
+    <h2>Network Device Configuration</h2>
+    <label>Device Type:
+      <select id="networkType" onchange="updateNetworkFields()">
+        <option value="">Select Device Type</option>
+        <option value="broadlink">Broadlink RM</option>
+        <option value="tasmota">Tasmota IR</option>
+        <option value="http">Generic HTTP API</option>
+      </select>
+    </label>
+    
+    <div id="network-config" style="margin-top: 10px; display: none;">
+      <label>IP Address: <input type="text" id="deviceIp" placeholder="192.168.1.100"></label>
+      <label>Port: <input type="text" id="devicePort" value="80"></label>
+      <button onclick="testNetworkDevice()">Test Connection</button>
+      <button onclick="testNetworkTransmit()">Test Transmit Power</button>
+    </div>
+    
+    <div id="network-result" class="code" style="margin-top: 10px;"></div>
+  </div>
+
+  <div class="section" id="cli-section" style="display: none;">
+    <h2>Command Line Configuration</h2>
+    <p class="info">For command-line tools, you'll need a Node.js backend. Here's the setup:</p>
+    <div class="code">
+# For LIRC (Linux):
+irsend SEND_ONCE TCL_ROKU KEY_POWER
+
+# For ir-ctl (Linux):
+ir-ctl -S nec:0x57e3,0x17
+
+# For Windows with WinLIRC:
+transmit.exe TCL_ROKU KEY_POWER
+    </div>
+    <button onclick="generateNodeBackend()">Generate Node.js Backend Code</button>
+    <div id="cli-result" class="code" style="margin-top: 10px;"></div>
+  </div>
+
+  <div class="section" id="test-section" style="display: none;">
+    <h2>Test IR Transmission</h2>
+    <p class="success">✅ Device Connected!</p>
+    <p>Test TCL Roku TV commands:</p>
+    <button onclick="sendTestCommand('power')">⏻ Power</button>
+    <button onclick="sendTestCommand('volumeUp')">🔊 Volume Up</button>
+    <button onclick="sendTestCommand('volumeDown')">🔉 Volume Down</button>
+    <button onclick="sendTestCommand('mute')">🔇 Mute</button>
+    <div id="test-result" class="code" style="margin-top: 10px;"></div>
+  </div>
+
+  <script>
+    let serialPort = null;
+    let serialWriter = null;
+    let serialReader = null;
+
+    // TCL Roku commands in different formats
+    const TCL_COMMANDS = {
+      power: {
+        pronto: '0000 006D 0022 0002 0157 00AB 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0015 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0040 0015 0040 0015 0040 0015 0040 0015 0040 0015 05F7',
+        nec: '0x57E3,0x17',
+        raw: 'sendir,1:1,1,38000,1,1,342,171,21,64,21,21,21,21,21,64,21,64,21,64,21,21,21,21,21,64,21,64,21,21,21,64,21,21,21,21,21,21,21,64,21,21,21,21,21,64,21,21,21,21,21,21,21,21,21,21,21,64,21,64,21,21,21,64,21,64,21,64,21,64,21,64,21,1527'
+      },
+      volumeUp: {
+        pronto: '0000 006D 0022 0002 0157 00AB 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0040 0015 0015 0015 0040 0015 0040 0015 0040 0015 0040 0015 0040 0015 0040 0015 05F7',
+        nec: '0x57E3,0x0F'
+      },
+      volumeDown: {
+        pronto: '0000 006D 0022 0002 0157 00AB 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0040 0015 0040 0015 0040 0015 05F7',
+        nec: '0x57E3,0x10'
+      },
+      mute: {
+        pronto: '0000 006D 0022 0002 0157 00AB 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0040 0015 0040 0015 0040 0015 0040 0015 05F7',
+        nec: '0x57E3,0x09'
+      }
+    };
+
+    async function checkSerialPort() {
+      const resultDiv = document.getElementById('detection-result');
+      resultDiv.style.display = 'block';
+      
+      if ('serial' in navigator) {
+        resultDiv.innerHTML = '<span class="success">✅ Web Serial API is supported!</span>\n';
+        resultDiv.innerHTML += 'Your browser can communicate with USB/Serial IR blasters.\n';
+        resultDiv.innerHTML += 'Common devices: Arduino with IR LED, USB-UIRT, USB IR Toy';
+        document.getElementById('serial-section').style.display = 'block';
+      } else {
+        resultDiv.innerHTML = '<span class="error">❌ Web Serial API not supported</span>\n';
+        resultDiv.innerHTML += 'Please use Chrome or Edge browser for serial device support.';
+      }
+    }
+
+    async function requestSerialPort() {
+      try {
+        // Request port access
+        serialPort = await navigator.serial.requestPort();
+        document.getElementById('serial-result').innerHTML = 
+          '<span class="success">✅ Port selected!</span>\n' +
+          `Port info: ${JSON.stringify(serialPort.getInfo(), null, 2)}`;
+        document.getElementById('serial-config').style.display = 'block';
+      } catch (e) {
+        document.getElementById('serial-result').innerHTML = 
+          `<span class="error">❌ Error: ${e.message}</span>`;
+      }
+    }
+
+    async function listSerialPorts() {
+      try {
+        const ports = await navigator.serial.getPorts();
+        if (ports.length === 0) {
+          document.getElementById('serial-result').innerHTML = 
+            '<span class="info">No ports available. Click "Request Serial Port Access" first.</span>';
+        } else {
+          let info = `<span class="success">Found ${ports.length} port(s):</span>\n`;
+          ports.forEach((port, i) => {
+            info += `Port ${i}: ${JSON.stringify(port.getInfo())}\n`;
+          });
+          document.getElementById('serial-result').innerHTML = info;
+        }
+      } catch (e) {
+        document.getElementById('serial-result').innerHTML = 
+          `<span class="error">❌ Error: ${e.message}</span>`;
+      }
+    }
+
+    async function connectSerial() {
+      if (!serialPort) {
+        document.getElementById('serial-result').innerHTML = 
+          '<span class="error">No port selected</span>';
+        return;
+      }
+
+      try {
+        const baudRate = parseInt(document.getElementById('baudRate').value);
+        await serialPort.open({ baudRate });
+        
+        const textEncoder = new TextEncoderStream();
+        const writableStreamClosed = textEncoder.readable.pipeTo(serialPort.writable);
+        serialWriter = textEncoder.writable.getWriter();
+        
+        document.getElementById('serial-result').innerHTML = 
+          `<span class="success">✅ Connected at ${baudRate} baud!</span>`;
+        document.getElementById('test-section').style.display = 'block';
+      } catch (e) {
+        document.getElementById('serial-result').innerHTML = 
+          `<span class="error">❌ Connection error: ${e.message}</span>`;
+      }
+    }
+
+    async function testSerialTransmit() {
+      if (!serialWriter) {
+        alert('Connect to serial port first!');
+        return;
+      }
+      
+      // Send NEC format command for Arduino
+      // Format: NEC:address,command
+      const command = `NEC:${TCL_COMMANDS.power.nec}\n`;
+      await serialWriter.write(command);
+      
+      document.getElementById('serial-result').innerHTML += 
+        `\n<span class="info">Sent: ${command}</span>`;
+    }
+
+    function checkNetworkDevice() {
+      const resultDiv = document.getElementById('detection-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="info">Network devices require backend integration.</span>\n';
+      resultDiv.innerHTML += 'Common devices: Broadlink RM Mini/Pro, Tasmota IR, SmartIR';
+      document.getElementById('network-section').style.display = 'block';
+    }
+
+    function updateNetworkFields() {
+      const type = document.getElementById('networkType').value;
+      if (type) {
+        document.getElementById('network-config').style.display = 'block';
+        if (type === 'broadlink') {
+          document.getElementById('devicePort').value = '80';
+        } else if (type === 'tasmota') {
+          document.getElementById('devicePort').value = '80';
+        }
+      }
+    }
+
+    async function testNetworkDevice() {
+      const ip = document.getElementById('deviceIp').value;
+      const port = document.getElementById('devicePort').value;
+      const type = document.getElementById('networkType').value;
+      
+      const resultDiv = document.getElementById('network-result');
+      
+      if (type === 'tasmota') {
+        resultDiv.innerHTML = `Testing Tasmota device at ${ip}:${port}...\n`;
+        resultDiv.innerHTML += `\nCURL command to test:\n`;
+        resultDiv.innerHTML += `curl http://${ip}/cm?cmnd=IRsend%20${JSON.stringify(TCL_COMMANDS.power.raw)}`;
+      } else if (type === 'broadlink') {
+        resultDiv.innerHTML = `Broadlink devices require Python integration.\n`;
+        resultDiv.innerHTML += `Install: pip install broadlink\n`;
+        resultDiv.innerHTML += `See implementation code in transport service.`;
+      }
+    }
+
+    function checkCommandLine() {
+      const resultDiv = document.getElementById('detection-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="info">Command-line tools require Node.js backend.</span>\n';
+      resultDiv.innerHTML += 'Common tools: LIRC (irsend), ir-ctl, WinLIRC';
+      document.getElementById('cli-section').style.display = 'block';
+    }
+
+    function generateNodeBackend() {
+      const code = `
+// Node.js backend for command-line IR tools
+const { exec } = require('child_process');
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+// For LIRC
+app.post('/api/ir/transmit', (req, res) => {
+  const { encoding, data } = req.body;
+  
+  if (encoding === 'nec') {
+    // Use ir-ctl for NEC codes
+    const [addr, cmd] = data.split(',');
+    exec(\`ir-ctl -S nec:\${addr},\${cmd}\`, (error, stdout, stderr) => {
+      if (error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.json({ success: true });
+      }
+    });
+  } else if (encoding === 'prontoHex') {
+    // Convert Pronto Hex to raw and send
+    // ... conversion logic ...
+  }
+});
+
+app.listen(3022, () => {
+  console.log('IR backend running on port 3022');
+});`;
+      
+      document.getElementById('cli-result').innerHTML = code;
+    }
+
+    async function sendTestCommand(cmd) {
+      const resultDiv = document.getElementById('test-result');
+      const command = TCL_COMMANDS[cmd];
+      
+      if (serialWriter) {
+        // Serial device
+        const necCmd = `NEC:${command.nec}\n`;
+        await serialWriter.write(necCmd);
+        resultDiv.innerHTML = `Sent via Serial: ${necCmd}`;
+      } else {
+        resultDiv.innerHTML = `Would send:\nNEC: ${command.nec}\nPronto: ${command.pronto.substring(0, 50)}...`;
+      }
+    }
+  </script>
+</body>
+</html>

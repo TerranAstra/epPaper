@@ -144,6 +144,13 @@ ENV/
 env.bak/
 venv.bak/
 
+# .NET build artifacts
+Frank.Events/Frank.Events.Api/bin/
+Frank.Events/Frank.Events.Api/obj/
+
+# Node modules
+gemini/irBlast/node_modules/
+
 # Spyder project settings
 .spyderproject
 .spyproject

@@ -1,0 +1,22 @@
+{
+  "name": "ir-blaster-backend",
+  "version": "1.0.0",
+  "description": "Backend server for IR Blaster hardware integration",
+  "main": "backend-example.js",
+  "scripts": {
+    "start": "node backend-example.js",
+    "start:lirc": "IR_METHOD=lirc node backend-example.js",
+    "start:ir-ctl": "IR_METHOD=ir-ctl node backend-example.js",
+    "start:serial": "IR_METHOD=serial node backend-example.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "optionalDependencies": {
+    "serialport": "^12.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,230 @@
+:root {
+  --bg: #0b0d10;
+  --panel: #12161b;
+  --muted: #8a94a7;
+  --text: #e6edf7;
+  --accent: #5ab0ff;
+  --danger: #ff6b6b;
+  --border: #222832;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--bg);
+  color: var(--text);
+}
+
+.muted { color: var(--muted); }
+
+.ir-app-frame {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100vh;
+}
+
+.ir-sidebar {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 16px;
+  overflow: auto;
+}
+
+.ir-sidebar-section { margin-bottom: 24px; }
+.ir-sidebar-section h3 { margin: 0 0 12px; font-size: 14px; color: var(--muted); font-weight: 600; }
+
+.ir-list { display: grid; gap: 8px; }
+.ir-list-item-wrapper {
+  display: flex;
+  gap: 4px;
+  position: relative;
+}
+.ir-list-item-wrapper.selected .ir-list-item { 
+  outline: 1px solid var(--accent); 
+}
+.ir-list-item {
+  flex: 1;
+  text-align: left;
+  background: #0f141a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 4px;
+  cursor: pointer;
+  color: var(--text);
+}
+.ir-delete-btn {
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 100%;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.ir-delete-btn:hover {
+  opacity: 1;
+}
+.ir-button-secondary {
+  background: #222832;
+  color: var(--text);
+}
+.ir-button-secondary:hover {
+  background: #2a3140;
+}
+
+.ir-form-row { display: grid; gap: 8px; margin-top: 12px; }
+.ir-input {
+  background: #0f141a;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.ir-button {
+  background: var(--accent);
+  color: #081019;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.ir-button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.ir-app-main { padding: 16px; display: grid; grid-template-rows: auto 1fr; }
+.ir-app-header h1 { margin: 0 0 4px; font-size: 20px; }
+.ir-subtitle { margin: 0; color: var(--muted); font-size: 13px; }
+
+.ir-board {
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
+}
+.ir-board-empty { color: var(--muted); padding: 24px; border: 1px dashed var(--border); border-radius: 8px; background: #0f141a; }
+
+.ir-board-cell {
+  background: #0f141a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 10px;
+  min-height: 56px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ir-board-cell:hover:not(.empty):not(:disabled) {
+  background: #141921;
+  border-color: var(--accent);
+}
+.ir-board-cell:active:not(.empty):not(:disabled) {
+  transform: scale(0.98);
+}
+.ir-board-cell.ir-transmitting {
+  background: var(--accent);
+  color: #081019;
+  animation: transmit-pulse 0.2s ease;
+}
+.ir-board-cell.empty { opacity: 0.1; cursor: default; }
+.ir-board-cell:disabled { opacity: 0.3; cursor: not-allowed; }
+.ir-cell-label { 
+  font-size: 13px; 
+  font-weight: 500;
+  text-transform: capitalize;
+  word-break: break-word;
+  text-align: center;
+}
+
+@keyframes transmit-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(90, 176, 255, 0.5); }
+  100% { transform: scale(1); }
+}
+
+/* Hardware Connection Section */
+.ir-hardware-section {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.ir-hardware-section h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.ir-hardware-status {
+  background: #0f141a;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.ir-hardware-status .success { color: #4ade80; }
+.ir-hardware-status .info { color: var(--muted); }
+.ir-hardware-status .error { color: var(--danger); }
+
+.ir-hardware-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.ir-hardware-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.ir-select {
+  background: #0f141a;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  min-width: 150px;
+}
+
+.ir-hardware-help {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.ir-hardware-help summary {
+  cursor: pointer;
+  color: var(--accent);
+  padding: 8px 0;
+}
+
+.ir-hardware-help .ir-code-block {
+  background: #0f141a;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.ir-hardware-help .ir-code-block p {
+  margin: 4px 0;
+}
+
+
