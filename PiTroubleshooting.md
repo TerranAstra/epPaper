@@ -61,3 +61,42 @@ To see what’s failing and get back to 202, take these checks (all on the Pi):
    - Keep the `curl` stanza from `CompletePiWalkthrough.md`, and optionally add a note in the doc: “If you get 500, rerun with `curl -v` and check `/health/db` or the API console for details.”
 
 These steps give you visibility into why 500 happened and how to confirm the doc’s test works. If you still see 500 after these checks, grab the JSON error body and the console log and we can dig in further.
+
+
+
+--- 
+
+FOllow up 
+
+It looks like the SQL Edge container is starting and then exiting immediately, so `docker ps` shows nothing. Let’s grab the logs and check status in detail:
+
+1. Show stopped containers:
+
+```bash
+docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Image}}'
+```
+You should see `frank-azure-sql-edge` with “Exited …” if it crashed.
+
+2. Inspect the start attempt:
+
+```bash
+docker compose -f docker-compose.mssql.yml --profile pi ps
+docker compose -f docker-compose.mssql.yml --profile pi logs frank-azure-sql-edge
+```
+The logs usually explain the crash (e.g., architecture mismatch, EULA/password issue).
+
+3. Check hardware architecture:
+
+```bash
+uname -m
+```
+Azure SQL Edge only runs on `aarch64` (64-bit). If you see `armv7l`, the container will exit—reflash the Pi with the 64-bit Raspberry Pi OS (Trixie) before retrying.
+
+Once the logs show the root cause, fix it (e.g., correct the password, accept the EULA, or ensure you’re on the supported architecture), rerun:
+
+```bash
+docker compose -f docker-compose.mssql.yml --profile pi up -d
+docker compose -f docker-compose.mssql.yml --profile pi ps
+```
+
+If the container stays Up, you can proceed with the API tests.
