@@ -120,7 +120,7 @@ curl -s -o /dev/null -w "%{http_code}\n" \
     "Voice":"Achird",
     "GroundingJson":null,
     "MetaJson":"{\"note\":\"smoke test\"}",
-    "ProposedSavePath":"/data/audioStream/20251105/audioStream202511050653.TestEvent.sav",
+    "ProposedSavePath":"/data/audioStream/YYYYMMDD/AppNameYYYYMMDDHHMMSS.AiSYNOPSIS.type",
     "SourceNodeId":"pi01"
   }' \
   http://localhost:5000/events
@@ -186,5 +186,24 @@ echo "//WIN_IP/AudioStream /data/audioStream cifs credentials=/etc/samba/creds.a
 - Later we’ll bundle Steps 1–6 into a single script:
   - Detect 64‑bit, install Docker, add group, pull up SQL Edge, install .NET SDK, export connection string, run Events API as a service.
 - For now, use the sequences above so any error from last time is “baked-in” corrected next time.
+
+### 11) Deploy the ePaper uploader (optional)
+- Why: Serve the 5.65" Waveshare panel locally with image/text uploads and debugging output.
+- Command (first time on the Pi):
+  ```bash
+  cd ~/epPaper
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install -r requirements.txt
+  python scripts/vendor_waveshare.py
+  EPAPER_DEBUG=1 python run_server.py
+  ```
+- Expected:
+  - Server listens on port 8000 (`http://<pi-ip>:8000`).
+  - `/api/status` returns `driver: hardware` when the Waveshare driver loads.
+- Retest later:
+  - Activate the venv (`source .venv/bin/activate`) and rerun `python run_server.py`.
+  - Set `EPAPER_ORIENTATION=portrait` if the panel is mounted vertically; the app auto-rotates content.
+  - If `/api/status` shows `simulation`, rerun `python scripts/vendor_waveshare.py`, confirm SPI is enabled, and review the debug logs printed to the console.
 
 If you want, I can turn Steps 1–6 into a single `setup_pi.sh` that you run once (idempotent) and a `start_services.sh` to bring the API/DB up on each boot.
