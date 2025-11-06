@@ -4,11 +4,25 @@ Start SQL Server:
 x64 dev: docker compose -f docker-compose.mssql.yml --profile x64 up -d
 Raspberry Pi: docker compose -f docker-compose.mssql.yml --profile pi up -d
 Change the SA password in the compose file before using long term.
-Run the events API:
+Run the events API:    1 -- AIzaSyDPJq3_  
 dotnet run --project Frank.Events/Frank.Events.Api
 Set SQL_CONNECTION_STRING (example): Server=localhost,1433;User ID=sa;Password=Your_strong_password123;TrustServerCertificate=True;Encrypt=False;Database=FrankEvents;
-Point the streaming app to the API:
+Point the streaming app to the API:   2 ---- _hMTAbS7q2p1uZzFp1E8gLNwZQ
 In gemini/geminiStreaming, set VITE_EVENTS_API_BASE (e.g., http://localhost:5000) and run npm run dev.
+
+
+# Set token as environment variable
+export GIT_TOKEN="your_token_here"
+
+# Clone or pull
+git clone https://${GIT_TOKEN}@github.com/TerranAstra/frank.git
+# Or for existing repo:
+cd ~/frank
+git remote set-url origin https://${GIT_TOKEN}@github.com/TerranAstra/frank.git
+git pull
+
+
+--- 
 
 
 Instruction Set 3: 
