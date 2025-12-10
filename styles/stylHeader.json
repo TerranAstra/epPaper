@@ -1,0 +1,49 @@
+{
+  "header": {
+    "display": "flex",
+    "justifyContent": "space-between",
+    "alignItems": "center",
+    "marginBottom": "20px"
+  },
+  "headerTitle": {
+    "margin": 0
+  },
+  "controls": {
+    "display": "flex",
+    "gap": "15px",
+    "alignItems": "center"
+  },
+  "select": {
+    "backgroundColor": "var(--surface-color)",
+    "color": "var(--primary-text-color)",
+    "border": "1px solid var(--border-color)",
+    "borderRadius": "4px",
+    "padding": "8px",
+    "transition": "opacity 0.3s"
+  },
+  "toggleLabel": {
+    "display": "flex",
+    "alignItems": "center",
+    "cursor": "pointer",
+    "userSelect": "none"
+  },
+  "toggleSwitch": {
+    "width": "40px",
+    "height": "20px",
+    "backgroundColor": "#444",
+    "borderRadius": "10px",
+    "position": "relative",
+    "transition": "background-color 0.3s"
+  },
+  "toggleKnob": {
+    "width": "16px",
+    "height": "16px",
+    "backgroundColor": "#fff",
+    "borderRadius": "50%",
+    "position": "absolute",
+    "top": "2px",
+    "left": "2px",
+    "transition": "transform 0.3s"
+  }
+}
+

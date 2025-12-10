@@ -1,0 +1,62 @@
+{
+  "dashboard": {
+    "display": "grid",
+    "gridTemplateColumns": "repeat(auto-fit, minmax(300px, 1fr))",
+    "gap": "20px",
+    "flexGrow": 1
+  },
+  "card": {
+    "backgroundColor": "var(--surface-color)",
+    "borderRadius": "8px",
+    "padding": "20px",
+    "border": "1px solid var(--border-color)",
+    "position": "relative"
+  },
+  "cardTitle": {
+    "marginTop": 0,
+    "borderBottom": "1px solid var(--border-color)",
+    "paddingBottom": "10px"
+  },
+  "cardContent": {
+    "color": "var(--secondary-text-color)"
+  },
+  "timeText": {
+    "fontSize": "2.5em",
+    "fontWeight": "bold",
+    "color": "var(--primary-text-color)"
+  },
+  "timeZoneText": {
+    "fontSize": "1.2em"
+  },
+  "tzLetter": {
+    "position": "absolute",
+    "top": "10px",
+    "right": "20px",
+    "fontSize": "2em",
+    "fontWeight": "bold",
+    "color": "var(--accent-color)",
+    "opacity": 0.5
+  },
+  "communityLists": {
+    "display": "grid",
+    "gridTemplateColumns": "1fr",
+    "gap": "10px",
+    "fontSize": "0.9em"
+  },
+  "questionText": {
+    "fontStyle": "italic",
+    "marginBottom": "20px",
+    "color": "var(--primary-text-color)",
+    "minHeight": "40px"
+  },
+  "button": {
+    "backgroundColor": "var(--accent-color)",
+    "color": "white",
+    "border": "none",
+    "borderRadius": "4px",
+    "padding": "10px 12px",
+    "cursor": "pointer",
+    "transition": "opacity 0.2s, background-color 0.2s"
+  }
+}
+

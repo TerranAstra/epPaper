@@ -1,0 +1,36 @@
+{
+  "sidebar": {
+    "width": "240px",
+    "backgroundColor": "var(--surface-color)",
+    "flexShrink": 0,
+    "display": "flex",
+    "flexDirection": "column"
+  },
+  "sidebarHeader": {
+    "padding": "20px",
+    "fontSize": "1.5em",
+    "fontWeight": "bold",
+    "color": "var(--accent-color)",
+    "textAlign": "center"
+  },
+  "navList": {
+    "listStyle": "none",
+    "padding": 0,
+    "margin": 0
+  },
+  "navItem": {
+    "borderBottom": "1px solid var(--border-color)"
+  },
+  "navLink": {
+    "display": "block",
+    "padding": "15px 20px",
+    "color": "var(--primary-text-color)",
+    "textDecoration": "none",
+    "transition": "background-color 0.2s, color 0.2s"
+  },
+  "navLinkActive": {
+    "backgroundColor": "var(--accent-color)",
+    "color": "#fff"
+  }
+}
+

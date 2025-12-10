@@ -1,0 +1,14 @@
+{
+  "placeholder": {
+    "padding": "20px",
+    "backgroundColor": "var(--surface-color)",
+    "borderRadius": "8px",
+    "textAlign": "center",
+    "flexGrow": 1,
+    "display": "flex",
+    "flexDirection": "column",
+    "justifyContent": "center",
+    "alignItems": "center"
+  }
+}
+
