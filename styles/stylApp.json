@@ -1,0 +1,23 @@
+{
+  "appContainer": {
+    "display": "flex",
+    "height": "100vh",
+    "backgroundColor": "var(--background-color)",
+    "color": "var(--primary-text-color)"
+  },
+  "mainContent": {
+    "flexGrow": 1,
+    "padding": "20px",
+    "overflowY": "auto",
+    "display": "flex",
+    "flexDirection": "column"
+  },
+  "error": {
+    "color": "var(--error-color)",
+    "backgroundColor": "var(--error-background-color)",
+    "padding": "10px",
+    "borderRadius": "4px",
+    "border": "1px solid var(--error-color)",
+    "marginBottom": "15px"
+  }
+}
